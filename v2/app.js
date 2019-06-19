@@ -1,9 +1,19 @@
 const express       = require("express"),
         app         = express(),
         bodyParser  = require("body-parser"),
-        mongoose    = require("mongoose")
+        mongoose    = require("mongoose"),
+        port        = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://localhost/yelp_camp",{ useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost/yelp_camp",{ useNewUrlParser: true });
+mongoose.connect("mongodb+srv://yelp:yelp123@myyelpcamp-jpxqb.mongodb.net/test?retryWrites=true&w=majority",
+{ useNewUrlParser: true }, 
+        function(err){
+            if(err){
+                console.log(err)
+        } else {
+                console.log("Database connection successful")  
+        }
+});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
@@ -75,6 +85,6 @@ app.get("/campgrounds/:id",(req, res)=>{
         }
     });
 });
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("The YelpCamp sever started")
+app.listen(port, function(){
+    console.log("The YelpCamp sever started " + port);
 });
